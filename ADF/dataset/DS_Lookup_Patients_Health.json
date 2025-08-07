@@ -1,0 +1,13 @@
+{
+	"name": "DS_Lookup_Patients_Health",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Lookup_Patients_Health",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

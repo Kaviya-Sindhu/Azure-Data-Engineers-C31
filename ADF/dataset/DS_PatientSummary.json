@@ -1,0 +1,24 @@
+{
+	"name": "DS_PatientSummary",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_Health_Data",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "health",
+				"fileSystem": "analytics"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

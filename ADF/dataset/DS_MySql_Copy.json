@@ -1,0 +1,24 @@
+{
+	"name": "DS_MySql_Copy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_MySQL_Copy",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

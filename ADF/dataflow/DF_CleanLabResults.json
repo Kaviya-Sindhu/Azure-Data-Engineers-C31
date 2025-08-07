@@ -1,0 +1,65 @@
+{
+	"name": "DF_CleanLabResults",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_LabResults",
+						"type": "DatasetReference"
+					},
+					"name": "LabResultsSrc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CleanedLabResults",
+						"type": "DatasetReference"
+					},
+					"name": "SinkCleanedLabResults"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FilterNullResults"
+				},
+				{
+					"name": "derivedColumnIsAbnormal"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          LabID as string,",
+				"          PatientID as string,",
+				"          Date as date,",
+				"          TestType as string,",
+				"          Result as integer,",
+				"          Unit as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> LabResultsSrc",
+				"LabResultsSrc filter(!isNull(PatientID) && !isNull(Result)) ~> FilterNullResults",
+				"FilterNullResults derive(IsAbnormal = iif((TestType == 'Glucose' && toInteger(Result) > 125) || ",
+				"    (TestType == 'Cholesterol' && toInteger(Result) > 240), ",
+				"    'Yes', 'No')) ~> derivedColumnIsAbnormal",
+				"derivedColumnIsAbnormal sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          PatientID as string,",
+				"          HeartRate as string,",
+				"          BP_Systolic as string,",
+				"          BP_Diastolic as string,",
+				"          RiskLevel as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkCleanedLabResults"
+			]
+		}
+	}
+}
