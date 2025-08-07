@@ -1,0 +1,19 @@
+{
+	"name": "SourceDataset_tgv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "employee_info_mock.csv",
+				"fileSystem": "local-upload-temp"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

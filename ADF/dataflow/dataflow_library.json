@@ -1,0 +1,122 @@
+{
+	"name": "dataflow_library",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Author",
+						"type": "DatasetReference"
+					},
+					"name": "author"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Book",
+						"type": "DatasetReference"
+					},
+					"name": "book"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Author",
+						"type": "DatasetReference"
+					},
+					"name": "OldBooks"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Book",
+						"type": "DatasetReference"
+					},
+					"name": "NewBooks"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinAuthorBook"
+				},
+				{
+					"name": "selectRemDupLibrary"
+				},
+				{
+					"name": "RankYear"
+				},
+				{
+					"name": "sortAuthor"
+				},
+				{
+					"name": "split1950"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          author_id as string,",
+				"          full_name as string,",
+				"          birth_year as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> author",
+				"source(output(",
+				"          book_id as string,",
+				"          title as string,",
+				"          author_id as string,",
+				"          category_id as string,",
+				"          published_year as integer,",
+				"          copies_available as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> book",
+				"author, book join(author@author_id == book@author_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinAuthorBook",
+				"JoinAuthorBook select(mapColumn(",
+				"          Author_Name = full_name,",
+				"          Book_Title = title,",
+				"          published_year",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectRemDupLibrary",
+				"selectRemDupLibrary rank(desc(published_year, true),",
+				"     output(Top_seller as long)) ~> RankYear",
+				"RankYear sort(asc(Author_Name, true)) ~> sortAuthor",
+				"sortAuthor split(published_year < 1950,",
+				"     disjoint: false) ~> split1950@(OldBooks, NewBooks)",
+				"split1950@OldBooks sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          author_id as string,",
+				"          full_name as string,",
+				"          birth_year as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OldBooks",
+				"split1950@NewBooks sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          book_id as string,",
+				"          title as string,",
+				"          author_id as string,",
+				"          category_id as string,",
+				"          published_year as string,",
+				"          copies_available as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> NewBooks"
+			]
+		}
+	}
+}

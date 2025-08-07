@@ -1,0 +1,123 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_International_sales",
+						"type": "DatasetReference"
+					},
+					"name": "InternationalSales"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_OnlineSales",
+						"type": "DatasetReference"
+					},
+					"name": "OnlineSales"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_StoreSales",
+						"type": "DatasetReference"
+					},
+					"name": "StoreSales"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_DataFlow_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          order_id as integer,",
+				"          sale_date as date,",
+				"          country as string,",
+				"          currency as string,",
+				"          amount as float",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> InternationalSales",
+				"source(output(",
+				"          sale_id as integer,",
+				"          sale_date as date,",
+				"          customer_id as integer,",
+				"          total_amount as float,",
+				"          payment_method as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> OnlineSales",
+				"source(output(",
+				"          transaction_id as integer,",
+				"          sale_date as date,",
+				"          cashier_name as string,",
+				"          total_items as integer,",
+				"          total_amount as float",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> StoreSales",
+				"InternationalSales, OnlineSales join(InternationalSales@sale_date == OnlineSales@sale_date,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"StoreSales, join1 join(StoreSales@sale_date == OnlineSales@sale_date,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     partitionBy('hash', 3,",
+				"          InternationalSales@sale_date,",
+				"          StoreSales@sale_date,",
+				"          OnlineSales@sale_date",
+				"     ),",
+				"     broadcast: 'auto')~> join2",
+				"join2 select(mapColumn(",
+				"          sales_date = StoreSales@sale_date,",
+				"          cashier_name,",
+				"          total_amount = StoreSales@total_amount,",
+				"          total_amount = amount,",
+				"          total_amount = OnlineSales@total_amount,",
+				"          payment_method",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(total_amount = total_amount + total_amount + total_amount) ~> derivedColumn1",
+				"derivedColumn1 sort(asc(sales_date, true)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

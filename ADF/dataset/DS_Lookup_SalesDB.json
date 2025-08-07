@@ -1,0 +1,13 @@
+{
+	"name": "DS_Lookup_SalesDB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Lookup_SalesDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,19 @@
+{
+	"name": "DestinationDataset_tgv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "copied_employee_info",
+				"container": "adls1-uploads"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

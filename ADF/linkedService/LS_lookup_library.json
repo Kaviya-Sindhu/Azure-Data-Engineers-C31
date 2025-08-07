@@ -1,0 +1,23 @@
+{
+	"name": "LS_lookup_library",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "link service for lookup activity on library_management DB",
+		"annotations": [],
+		"type": "MySql",
+		"typeProperties": {
+			"server": "localhost",
+			"port": 3306,
+			"database": "library_management",
+			"username": "root",
+			"sslMode": 1,
+			"useSystemTrustStore": 0,
+			"driverVersion": "v2",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5YWM2Njc0ZS0yMzVkLTQ3NGYtOTFjZS1iOTA1ZDMxNTVjMWUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1-selfHosted",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

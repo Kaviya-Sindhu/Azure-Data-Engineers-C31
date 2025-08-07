@@ -1,0 +1,91 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_DataFlow",
+						"type": "DatasetReference"
+					},
+					"name": "Employees",
+					"description": "Adding Employees.csv from adls source dataset"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_DataFlow_Dept",
+						"type": "DatasetReference"
+					},
+					"name": "Departments"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Sink_Rank_Emp",
+						"type": "DatasetReference"
+					},
+					"name": "sinkDataFlowOutputs"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinEmployeesDepartments"
+				},
+				{
+					"name": "RankSeniorEmployee"
+				},
+				{
+					"name": "SelectSkipDuplicateColumn",
+					"description": "Renaming JoinEmployeesDepartments to SelectSkipDuplicateColumn with columns department_id"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          hire_date as date,",
+				"          department_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Employees",
+				"source(output(",
+				"          department_id as integer,",
+				"          department_name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Departments",
+				"Employees, Departments join(Employees@department_id == Departments@department_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinEmployeesDepartments",
+				"SelectSkipDuplicateColumn rank(desc(hire_date, true),",
+				"     caseInsensitive: true,",
+				"     output(Senior_Employee_Rank as long)) ~> RankSeniorEmployee",
+				"JoinEmployeesDepartments select(mapColumn(",
+				"          employee_id,",
+				"          first_name,",
+				"          last_name,",
+				"          email,",
+				"          hire_date,",
+				"          department_name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectSkipDuplicateColumn",
+				"RankSeniorEmployee sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkDataFlowOutputs"
+			]
+		}
+	}
+}

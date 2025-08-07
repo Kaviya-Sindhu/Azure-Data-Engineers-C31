@@ -1,0 +1,38 @@
+{
+	"name": "DS_Author",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "authors.csv",
+				"folderPath": "Library-Management",
+				"fileSystem": "my-sql-server-uploads"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "author_id",
+				"type": "String"
+			},
+			{
+				"name": "full_name",
+				"type": "String"
+			},
+			{
+				"name": "birth_year",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

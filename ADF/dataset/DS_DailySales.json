@@ -1,0 +1,46 @@
+{
+	"name": "DS_DailySales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "daily_sales_summary.csv",
+				"folderPath": "Sales_DB",
+				"fileSystem": "my-sql-server-uploads"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "summary_id",
+				"type": "String"
+			},
+			{
+				"name": "report_date",
+				"type": "String"
+			},
+			{
+				"name": "total_orders",
+				"type": "String"
+			},
+			{
+				"name": "total_revenue",
+				"type": "String"
+			},
+			{
+				"name": "region",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

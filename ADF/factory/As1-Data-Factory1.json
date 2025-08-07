@@ -1,0 +1,14 @@
+{
+	"name": "As1-Data-Factory1",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true"
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f4431667-9a01-47c0-a39e-eaf907923cdc",
+		"tenantId": "95c8bed9-f419-4ea7-ae1e-c8f0d0a2002f"
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"name": "DS_Sink_Company_db",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Company_DB",
+				"fileSystem": "my-sql-server-uploads"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "author_id",
+				"type": "String"
+			},
+			{
+				"name": "full_name",
+				"type": "String"
+			},
+			{
+				"name": "birth_year",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
