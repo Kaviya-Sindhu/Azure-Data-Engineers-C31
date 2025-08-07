@@ -1,0 +1,65 @@
+{
+	"name": "DF_FlagHighRiskPatients",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_VitalSigns",
+						"type": "DatasetReference"
+					},
+					"name": "VitalSignsSrc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CleanedVitals",
+						"type": "DatasetReference"
+					},
+					"name": "SinkCleanedVitals"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddRiskLevel"
+				},
+				{
+					"name": "NeededColumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          RecordID as integer,",
+				"          PatientID as string,",
+				"          Date as date,",
+				"          HeartRate as integer,",
+				"          BP_Systolic as integer,",
+				"          BP_Diastolic as integer,",
+				"          Temp_C as float",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> VitalSignsSrc",
+				"VitalSignsSrc derive(RiskLevel = iif(BP_Systolic >= 140 || BP_Diastolic >= 90 || HeartRate >= 100, 'High', 'Normal')) ~> AddRiskLevel",
+				"AddRiskLevel select(mapColumn(",
+				"          PatientID,",
+				"          HeartRate,",
+				"          BP_Systolic,",
+				"          BP_Diastolic,",
+				"          RiskLevel",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> NeededColumns",
+				"NeededColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkCleanedVitals"
+			]
+		}
+	}
+}

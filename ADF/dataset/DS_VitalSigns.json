@@ -1,0 +1,54 @@
+{
+	"name": "DS_VitalSigns",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_Health_Data",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "vital_signs_2025-07-30.csv",
+				"folderPath": "health/vital_signs",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "RecordID",
+				"type": "String"
+			},
+			{
+				"name": "PatientID",
+				"type": "String"
+			},
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "HeartRate",
+				"type": "String"
+			},
+			{
+				"name": "BP_Systolic",
+				"type": "String"
+			},
+			{
+				"name": "BP_Diastolic",
+				"type": "String"
+			},
+			{
+				"name": "Temp_C",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

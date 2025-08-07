@@ -1,0 +1,54 @@
+{
+	"name": "DS_Join_CleanedLabResults",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_Health_Data",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Cleaned_LabResults.csv",
+				"folderPath": "health/lab_results",
+				"fileSystem": "curated"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "LabID",
+				"type": "String"
+			},
+			{
+				"name": "PatientID",
+				"type": "String"
+			},
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "TestType",
+				"type": "String"
+			},
+			{
+				"name": "Result",
+				"type": "String"
+			},
+			{
+				"name": "Unit",
+				"type": "String"
+			},
+			{
+				"name": "IsAbnormal",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,62 @@
+{
+	"name": "DF_CleanPatients",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Patients",
+						"type": "DatasetReference"
+					},
+					"name": "PatientsSrc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CleanedPatients",
+						"type": "DatasetReference"
+					},
+					"name": "SinkCleanedPatients"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FilterNullColumn"
+				},
+				{
+					"name": "DerivedColumnAgeGroup"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PatientID as string,",
+				"          Name as string,",
+				"          Age as integer,",
+				"          Gender as string,",
+				"          Address as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> PatientsSrc",
+				"PatientsSrc filter(!isNull(PatientID) && !isNull(Age) && !isNull(Gender)) ~> FilterNullColumn",
+				"FilterNullColumn derive(AgeGroup = iif(Age < 18, 'Child', iif(Age < 60, 'Adult', 'Senior'))) ~> DerivedColumnAgeGroup",
+				"DerivedColumnAgeGroup sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          PatientID as string,",
+				"          HeartRate as string,",
+				"          BP_Systolic as string,",
+				"          BP_Diastolic as string,",
+				"          RiskLevel as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkCleanedPatients"
+			]
+		}
+	}
+}

@@ -1,0 +1,111 @@
+{
+	"name": "DF_Join_Aggregate_Patient_Data",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Join_CleanedPatients",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedPatientsSRC"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Join_CleanedLabResults",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedLabResultsSRC"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Join_CleanedVitalSigns",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedVitalSignsSRC"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_PatientSummary",
+						"type": "DatasetReference"
+					},
+					"name": "SinkPatientSummary"
+				}
+			],
+			"transformations": [
+				{
+					"name": "VitalsLabsJoin"
+				},
+				{
+					"name": "PatientFullJoin"
+				},
+				{
+					"name": "AggregatePatientStats"
+				},
+				{
+					"name": "derivedColumnAgeGroup"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PatientID as string,",
+				"          Name as string,",
+				"          Age as integer,",
+				"          Gender as string,",
+				"          Address as string,",
+				"          AgeGroup as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CleanedPatientsSRC",
+				"source(output(",
+				"          LabID as string,",
+				"          PatientID as string,",
+				"          Date as date,",
+				"          TestType as string,",
+				"          Result as string,",
+				"          Unit as string,",
+				"          IsAbnormal as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CleanedLabResultsSRC",
+				"source(output(",
+				"          PatientID as string,",
+				"          HeartRate as integer,",
+				"          BP_Systolic as integer,",
+				"          BP_Diastolic as integer,",
+				"          RiskLevel as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CleanedVitalSignsSRC",
+				"CleanedLabResultsSRC, CleanedVitalSignsSRC join(CleanedLabResultsSRC@PatientID == CleanedVitalSignsSRC@PatientID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> VitalsLabsJoin",
+				"CleanedPatientsSRC, VitalsLabsJoin join(CleanedPatientsSRC@PatientID == CleanedVitalSignsSRC@PatientID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> PatientFullJoin",
+				"derivedColumnAgeGroup aggregate(groupBy(CleanedPatientsSRC@PatientID),",
+				"     AvgHeartRate = avg(HeartRate),",
+				"          TotalLabTests = count(TestType),",
+				"          AbnormalLabCount = sum(iif(IsAbnormal == 'Yes', 1, 0))) ~> AggregatePatientStats",
+				"PatientFullJoin derive(AgeGroup = iif(Age < 18, 'Child', iif(Age < 60, 'Adult', 'Senior'))) ~> derivedColumnAgeGroup",
+				"AggregatePatientStats sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkPatientSummary"
+			]
+		}
+	}
+}

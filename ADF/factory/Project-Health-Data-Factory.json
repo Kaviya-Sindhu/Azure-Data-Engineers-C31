@@ -1,0 +1,9 @@
+{
+	"name": "Project-Health-Data-Factory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5c748a14-0e8f-4f40-923f-e91b9e953c42",
+		"tenantId": "95c8bed9-f419-4ea7-ae1e-c8f0d0a2002f"
+	}
+}
