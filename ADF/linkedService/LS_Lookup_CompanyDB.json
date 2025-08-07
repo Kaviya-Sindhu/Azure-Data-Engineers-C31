@@ -1,0 +1,29 @@
+{
+	"name": "LS_Lookup_CompanyDB",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "MySql",
+		"typeProperties": {
+			"server": "localhost",
+			"port": 3306,
+			"database": "company_db",
+			"username": "root",
+			"sslMode": 1,
+			"useSystemTrustStore": 0,
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault2",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "MySQL-PASS"
+			},
+			"driverVersion": "v2"
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1-selfHosted",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

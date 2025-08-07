@@ -1,0 +1,21 @@
+{
+	"name": "SqlServer1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "ABINAYA\\MSSQLSERVER01",
+			"database": "TestDB",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "Windows",
+			"userName": "abinaya\\abina",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjZjUxMzhkZi1jOWFhLTQ0ZDMtYmY5NC04NzYxMmU3NjllYWYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1-selfHosted",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

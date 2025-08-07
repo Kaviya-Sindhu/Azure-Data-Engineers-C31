@@ -1,0 +1,13 @@
+{
+	"name": "DS_lookup_library",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_lookup_library",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
