@@ -1,0 +1,21 @@
+{
+	"name": "DockerSQL_LinkedService",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "10.0.0.117,1433",
+			"database": "master",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "SA",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhNTBhZGUzZi1mNTQwLTQ5NmItYjJmMS00MDAzMGJlODg4ZTAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntimeOnprem",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

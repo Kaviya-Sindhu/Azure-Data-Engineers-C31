@@ -1,0 +1,9 @@
+{
+	"name": "AzureCubernetfirst",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "57f55873-f39a-4c36-a563-2cd5b6fa8e74",
+		"tenantId": "c6788ec9-e0b9-4e7a-b107-b33ec637291e"
+	}
+}

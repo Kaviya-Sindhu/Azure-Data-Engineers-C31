@@ -1,0 +1,42 @@
+{
+	"name": "DS_OR_ORDERS_OTHERREGIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OnlineRetailLinkedServiceADLSGen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Folderpath": {
+				"type": "string"
+			},
+			"Filepath": {
+				"type": "string"
+			},
+			"Sheetpath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": {
+				"value": "@dataset().Sheetpath",
+				"type": "Expression"
+			},
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().Filepath",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().Folderpath",
+					"type": "Expression"
+				}
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

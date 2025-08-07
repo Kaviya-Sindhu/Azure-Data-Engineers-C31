@@ -1,0 +1,17 @@
+{
+	"name": "SqlServerTable4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Miniproj_incrementaldataload",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "weather_data"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

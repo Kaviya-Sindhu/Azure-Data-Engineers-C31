@@ -1,0 +1,29 @@
+{
+	"name": "SqlServer1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "SA",
+			"database": "master",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "SA",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "passazurepass",
+				"secretVersion": "711ae7f9d42546078854cdcd479d177c"
+			}
+		},
+		"connectVia": {
+			"referenceName": "IRSecondselfhosted",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

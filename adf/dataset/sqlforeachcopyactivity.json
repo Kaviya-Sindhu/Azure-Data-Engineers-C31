@@ -1,0 +1,25 @@
+{
+	"name": "sqlforeachcopyactivity",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_foreach_copy_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"nametable": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().nametable",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

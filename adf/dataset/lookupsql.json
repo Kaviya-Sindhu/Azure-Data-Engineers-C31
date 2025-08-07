@@ -1,0 +1,13 @@
+{
+	"name": "lookupsql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLServerlinkedservice",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

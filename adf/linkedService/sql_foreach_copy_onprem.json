@@ -1,0 +1,29 @@
+{
+	"name": "sql_foreach_copy_onprem",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "10.0.0.41",
+			"database": "master",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "SA",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "passazurepass",
+				"secretVersion": "711ae7f9d42546078854cdcd479d177c"
+			}
+		},
+		"connectVia": {
+			"referenceName": "IRSecondselfhosted",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
