@@ -46,7 +46,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "\n\nSELECT MAX(Date_Time) AS Date_Time FROM weather_data",
+							"value": "\n\nSELECT MIN(Date_Time) AS Date_Time FROM weather_data",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
