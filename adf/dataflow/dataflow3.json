@@ -1,0 +1,112 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ADLSGen2",
+						"type": "DatasetReference"
+					},
+					"name": "weatherdata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Dataflowoutput",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectTransformation"
+				},
+				{
+					"name": "dateconversions"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Location as string,",
+				"          Date_Time as timestamp,",
+				"          Temperature_C as double,",
+				"          Humidity_pct as double,",
+				"          Precipitation_mm as double,",
+				"          Wind_Speed_kmh as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 50,",
+				"     ignoreNoFilesFound: false) ~> weatherdata",
+				"weatherdata select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectTransformation",
+				"selectTransformation derive(Year = year(Date_Time)",
+				",",
+				"          Month = iif(month(Date_Time) == 1, 'January',",
+				"iif(month(Date_Time) == 2, 'February',",
+				"iif(month(Date_Time) == 3, 'March',",
+				"iif(month(Date_Time) == 4, 'April',",
+				"iif(month(Date_Time) == 5, 'May',",
+				"iif(month(Date_Time) == 6, 'June',",
+				"iif(month(Date_Time) == 7, 'July',",
+				"iif(month(Date_Time) == 8, 'August',",
+				"iif(month(Date_Time) == 9, 'September',",
+				"iif(month(Date_Time) == 10, 'October',",
+				"iif(month(Date_Time) == 11, 'November',",
+				"iif(month(Date_Time) == 12, 'December',",
+				"'Unknown'))))))))))))",
+				",",
+				"          Day = dayOfMonth(Date_Time),",
+				"          Hour = hour(Date_Time)",
+				",",
+				"          Minute = minute(Date_Time),",
+				"          Second = second(Date_Time),",
+				"          {Weather Condition} = iif(Precipitation_mm > 0,",
+				"    iif(Temperature_C <= 0, 'snow', 'rain'),",
+				"    'sunny'",
+				")",
+				") ~> dateconversions",
+				"filter1 aggregate(groupBy(Location,",
+				"          Year,",
+				"          Month,",
+				"          Day,",
+				"          Hour,",
+				"          {Weather Condition}),",
+				"     {Avegarge Temperature} = avg(Temperature_C),",
+				"          {Average Humidity} = avg(Humidity_pct),",
+				"          {Average Precipitation} = avg(Precipitation_mm),",
+				"          {Maximum Windspeed} = max(Wind_Speed_kmh),",
+				"          {Minimum Windspeed} = min(Wind_Speed_kmh),",
+				"          {Minimum Temperature} = min(Temperature_C),",
+				"          {Maximum Temperature} = max(Temperature_C)) ~> aggregate1",
+				"dateconversions filter(Temperature_C!= 0 ",
+				") ~> filter1",
+				"aggregate1 sort(asc(Location, true),",
+				"     asc(Year, true),",
+				"     asc(Day, true),",
+				"     caseInsensitive: true,",
+				"     partitionLevel: true) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
