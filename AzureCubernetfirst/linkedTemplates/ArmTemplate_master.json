@@ -1,0 +1,409 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AzureCubernetfirst"
+		},
+		"ADLSGen2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLSGen2'"
+		},
+		"ADLSgetmetadata_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLSgetmetadata'"
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
+		},
+		"AzureDataLakeStorage3_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3'"
+		},
+		"AzureDataLakeStorage4_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage4'"
+		},
+		"AzureDataLakeStorage5_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage5'"
+		},
+		"AzureDataLakeStorage6_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage6'"
+		},
+		"Azureblobmetadata_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azureblobmetadata'"
+		},
+		"DockerSQL_LinkedService_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'DockerSQL_LinkedService'"
+		},
+		"Miniproj_incrementaldataloadADLSgen2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Miniproj_incrementaldataloadADLSgen2'"
+		},
+		"OnlineRetailLinkedServiceADLSGen2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'OnlineRetailLinkedServiceADLSGen2'"
+		},
+		"SQLServerlinkedservice_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQLServerlinkedservice'"
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"ADLSgetmetadata_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage4_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage5_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage6_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://azurekeyvau.vault.azure.net/"
+		},
+		"AzureKeyVault2_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://azurekeyvau.vault.azure.net/"
+		},
+		"DockerSQL_LinkedService_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "10.0.0.117,1433"
+		},
+		"DockerSQL_LinkedService_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "master"
+		},
+		"DockerSQL_LinkedService_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
+		},
+		"Miniproj_incrementaldataload_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "10.0.0.41"
+		},
+		"Miniproj_incrementaldataload_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "master"
+		},
+		"Miniproj_incrementaldataload_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
+		},
+		"Miniproj_incrementaldataloadADLSgen2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"OnlineRetailLinkedServiceADLSGen2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"SQLServerlinkedservice_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "10.0.0.41"
+		},
+		"SQLServerlinkedservice_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "master"
+		},
+		"SQLServerlinkedservice_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "SA"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "master"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
+		},
+		"SqlServer2_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "10.0.0.41"
+		},
+		"SqlServer2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "master"
+		},
+		"SqlServer2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
+		},
+		"sql_foreach_copy_onprem_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "10.0.0.41"
+		},
+		"sql_foreach_copy_onprem_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "master"
+		},
+		"sql_foreach_copy_onprem_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "AzureCubernetfirst_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLSGen2_accountKey": {
+						"value": "[parameters('ADLSGen2_accountKey')]"
+					},
+					"ADLSgetmetadata_accountKey": {
+						"value": "[parameters('ADLSgetmetadata_accountKey')]"
+					},
+					"AzureDataLakeStorage2_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					},
+					"AzureDataLakeStorage3_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage3_accountKey')]"
+					},
+					"AzureDataLakeStorage4_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage4_accountKey')]"
+					},
+					"AzureDataLakeStorage5_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage5_accountKey')]"
+					},
+					"AzureDataLakeStorage6_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage6_accountKey')]"
+					},
+					"Azureblobmetadata_connectionString": {
+						"value": "[parameters('Azureblobmetadata_connectionString')]"
+					},
+					"Miniproj_incrementaldataloadADLSgen2_accountKey": {
+						"value": "[parameters('Miniproj_incrementaldataloadADLSgen2_accountKey')]"
+					},
+					"OnlineRetailLinkedServiceADLSGen2_accountKey": {
+						"value": "[parameters('OnlineRetailLinkedServiceADLSGen2_accountKey')]"
+					},
+					"ADLSGen2_properties_typeProperties_url": {
+						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
+					},
+					"ADLSgetmetadata_properties_typeProperties_url": {
+						"value": "[parameters('ADLSgetmetadata_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage3_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage3_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage4_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage4_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage5_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage5_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage6_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage6_properties_typeProperties_url')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"AzureKeyVault2_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault2_properties_typeProperties_baseUrl')]"
+					},
+					"Miniproj_incrementaldataloadADLSgen2_properties_typeProperties_url": {
+						"value": "[parameters('Miniproj_incrementaldataloadADLSgen2_properties_typeProperties_url')]"
+					},
+					"OnlineRetailLinkedServiceADLSGen2_properties_typeProperties_url": {
+						"value": "[parameters('OnlineRetailLinkedServiceADLSGen2_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "AzureCubernetfirst_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'AzureCubernetfirst_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "AzureCubernetfirst_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"DockerSQL_LinkedService_password": {
+						"value": "[parameters('DockerSQL_LinkedService_password')]"
+					},
+					"SQLServerlinkedservice_password": {
+						"value": "[parameters('SQLServerlinkedservice_password')]"
+					},
+					"DockerSQL_LinkedService_properties_typeProperties_server": {
+						"value": "[parameters('DockerSQL_LinkedService_properties_typeProperties_server')]"
+					},
+					"DockerSQL_LinkedService_properties_typeProperties_database": {
+						"value": "[parameters('DockerSQL_LinkedService_properties_typeProperties_database')]"
+					},
+					"DockerSQL_LinkedService_properties_typeProperties_userName": {
+						"value": "[parameters('DockerSQL_LinkedService_properties_typeProperties_userName')]"
+					},
+					"Miniproj_incrementaldataload_properties_typeProperties_server": {
+						"value": "[parameters('Miniproj_incrementaldataload_properties_typeProperties_server')]"
+					},
+					"Miniproj_incrementaldataload_properties_typeProperties_database": {
+						"value": "[parameters('Miniproj_incrementaldataload_properties_typeProperties_database')]"
+					},
+					"Miniproj_incrementaldataload_properties_typeProperties_userName": {
+						"value": "[parameters('Miniproj_incrementaldataload_properties_typeProperties_userName')]"
+					},
+					"SQLServerlinkedservice_properties_typeProperties_server": {
+						"value": "[parameters('SQLServerlinkedservice_properties_typeProperties_server')]"
+					},
+					"SQLServerlinkedservice_properties_typeProperties_database": {
+						"value": "[parameters('SQLServerlinkedservice_properties_typeProperties_database')]"
+					},
+					"SQLServerlinkedservice_properties_typeProperties_userName": {
+						"value": "[parameters('SQLServerlinkedservice_properties_typeProperties_userName')]"
+					},
+					"SqlServer1_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_server')]"
+					},
+					"SqlServer1_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_database')]"
+					},
+					"SqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					},
+					"SqlServer2_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer2_properties_typeProperties_server')]"
+					},
+					"SqlServer2_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer2_properties_typeProperties_database')]"
+					},
+					"SqlServer2_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer2_properties_typeProperties_userName')]"
+					},
+					"sql_foreach_copy_onprem_properties_typeProperties_server": {
+						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_server')]"
+					},
+					"sql_foreach_copy_onprem_properties_typeProperties_database": {
+						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_database')]"
+					},
+					"sql_foreach_copy_onprem_properties_typeProperties_userName": {
+						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'AzureCubernetfirst_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "AzureCubernetfirst_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'AzureCubernetfirst_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "AzureCubernetfirst_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'AzureCubernetfirst_ArmTemplate_3')]"
+			]
+		}
+	]
+}

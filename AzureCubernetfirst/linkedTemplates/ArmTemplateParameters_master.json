@@ -1,0 +1,138 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "AzureCubernetfirst"
+		},
+		"ADLSGen2_accountKey": {
+			"value": ""
+		},
+		"ADLSgetmetadata_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage3_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage4_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage5_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage6_accountKey": {
+			"value": ""
+		},
+		"Azureblobmetadata_connectionString": {
+			"value": ""
+		},
+		"DockerSQL_LinkedService_password": {
+			"value": ""
+		},
+		"Miniproj_incrementaldataloadADLSgen2_accountKey": {
+			"value": ""
+		},
+		"OnlineRetailLinkedServiceADLSGen2_accountKey": {
+			"value": ""
+		},
+		"SQLServerlinkedservice_password": {
+			"value": ""
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"ADLSgetmetadata_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage4_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage5_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage6_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://azurekeyvau.vault.azure.net/"
+		},
+		"AzureKeyVault2_properties_typeProperties_baseUrl": {
+			"value": "https://azurekeyvau.vault.azure.net/"
+		},
+		"DockerSQL_LinkedService_properties_typeProperties_server": {
+			"value": "10.0.0.117,1433"
+		},
+		"DockerSQL_LinkedService_properties_typeProperties_database": {
+			"value": "master"
+		},
+		"DockerSQL_LinkedService_properties_typeProperties_userName": {
+			"value": "SA"
+		},
+		"Miniproj_incrementaldataload_properties_typeProperties_server": {
+			"value": "10.0.0.41"
+		},
+		"Miniproj_incrementaldataload_properties_typeProperties_database": {
+			"value": "master"
+		},
+		"Miniproj_incrementaldataload_properties_typeProperties_userName": {
+			"value": "SA"
+		},
+		"Miniproj_incrementaldataloadADLSgen2_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"OnlineRetailLinkedServiceADLSGen2_properties_typeProperties_url": {
+			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
+		},
+		"SQLServerlinkedservice_properties_typeProperties_server": {
+			"value": "10.0.0.41"
+		},
+		"SQLServerlinkedservice_properties_typeProperties_database": {
+			"value": "master"
+		},
+		"SQLServerlinkedservice_properties_typeProperties_userName": {
+			"value": "SA"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"value": "SA"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"value": "master"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "SA"
+		},
+		"SqlServer2_properties_typeProperties_server": {
+			"value": "10.0.0.41"
+		},
+		"SqlServer2_properties_typeProperties_database": {
+			"value": "master"
+		},
+		"SqlServer2_properties_typeProperties_userName": {
+			"value": "SA"
+		},
+		"sql_foreach_copy_onprem_properties_typeProperties_server": {
+			"value": "10.0.0.41"
+		},
+		"sql_foreach_copy_onprem_properties_typeProperties_database": {
+			"value": "master"
+		},
+		"sql_foreach_copy_onprem_properties_typeProperties_userName": {
+			"value": "SA"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
