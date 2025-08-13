@@ -1,0 +1,9 @@
+{
+	"name": "rg1-AzureDataFactory1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "337c5571-b660-4d73-8ae0-aa07d2c0b67f",
+		"tenantId": "8a320526-eefc-4880-91f4-a1b109ed1713"
+	}
+}
