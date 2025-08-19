@@ -170,12 +170,99 @@
 		"sql_foreach_copy_onprem_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "SA"
+		},
+		"worldbankdata_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "10.0.0.41"
+		},
+		"worldbankdata_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "master"
+		},
+		"worldbankdata_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Copypipeline_databricks')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data_onprmtodatabricks",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "SELECT * FROM world_bank_data_2025;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "world_bank_data",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "worldbankdata",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/world_bank_data')]",
+				"[concat(variables('factoryId'), '/datasets/worldbankdata')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Customers_Orders_Ingestion')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -3557,6 +3644,117 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/world_bank_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "worldbankdata",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/worldbankdata')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/worldbankdata')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLSGen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "world_bank_data_2025.csv",
+						"fileSystem": "databricksinput"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "country_name",
+						"type": "String"
+					},
+					{
+						"name": "country_id",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "Inflation (CPI %)",
+						"type": "String"
+					},
+					{
+						"name": "GDP (Current USD)",
+						"type": "String"
+					},
+					{
+						"name": "GDP per Capita (Current USD)",
+						"type": "String"
+					},
+					{
+						"name": "Unemployment Rate (%)",
+						"type": "String"
+					},
+					{
+						"name": "Interest Rate (Real, %)",
+						"type": "String"
+					},
+					{
+						"name": "Inflation (GDP Deflator, %)",
+						"type": "String"
+					},
+					{
+						"name": "GDP Growth (% Annual)",
+						"type": "String"
+					},
+					{
+						"name": "Current Account Balance (% GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Government Expense (% of GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Government Revenue (% of GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Tax Revenue (% of GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Gross National Income (USD)",
+						"type": "String"
+					},
+					{
+						"name": "Public Debt (% of GDP)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLSGen2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ADLSGen2')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -3941,6 +4139,40 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/IRSecondselfhosted')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/worldbankdata')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('worldbankdata_properties_typeProperties_server')]",
+					"database": "[parameters('worldbankdata_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('worldbankdata_properties_typeProperties_userName')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault2",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "passazurepass",
+						"secretVersion": "711ae7f9d42546078854cdcd479d177c"
+					}
+				},
+				"connectVia": {
+					"referenceName": "IRSecondselfhosted",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRSecondselfhosted')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault2')]"
 			]
 		},
 		{

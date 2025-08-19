@@ -127,6 +127,15 @@
 		},
 		"sql_foreach_copy_onprem_properties_typeProperties_userName": {
 			"value": "SA"
+		},
+		"worldbankdata_properties_typeProperties_server": {
+			"value": "10.0.0.41"
+		},
+		"worldbankdata_properties_typeProperties_database": {
+			"value": "master"
+		},
+		"worldbankdata_properties_typeProperties_userName": {
+			"value": "SA"
 		}
 	}
 }

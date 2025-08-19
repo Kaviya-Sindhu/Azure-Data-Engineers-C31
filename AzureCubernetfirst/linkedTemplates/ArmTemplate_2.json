@@ -598,6 +598,97 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/worldbankdata')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLSGen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "world_bank_data_2025.csv",
+						"fileSystem": "databricksinput"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "country_name",
+						"type": "String"
+					},
+					{
+						"name": "country_id",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "Inflation (CPI %)",
+						"type": "String"
+					},
+					{
+						"name": "GDP (Current USD)",
+						"type": "String"
+					},
+					{
+						"name": "GDP per Capita (Current USD)",
+						"type": "String"
+					},
+					{
+						"name": "Unemployment Rate (%)",
+						"type": "String"
+					},
+					{
+						"name": "Interest Rate (Real, %)",
+						"type": "String"
+					},
+					{
+						"name": "Inflation (GDP Deflator, %)",
+						"type": "String"
+					},
+					{
+						"name": "GDP Growth (% Annual)",
+						"type": "String"
+					},
+					{
+						"name": "Current Account Balance (% GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Government Expense (% of GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Government Revenue (% of GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Tax Revenue (% of GDP)",
+						"type": "String"
+					},
+					{
+						"name": "Gross National Income (USD)",
+						"type": "String"
+					},
+					{
+						"name": "Public Debt (% of GDP)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DockerSQL_LinkedService')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -775,298 +866,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Customers_Orders_Ingestion')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get_File_List",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "DS_OR_ORDERS_REGION1",
-								"type": "DatasetReference",
-								"parameters": {
-									"Folderpath": {
-										"value": "@pipeline().parameters.Folderpath",
-										"type": "Expression"
-									},
-									"Filepath": {
-										"value": "@pipeline().parameters.Filepath",
-										"type": "Expression"
-									}
-								}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Get_File_List",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Get_File_List').output.childItems",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Switch_Filetype",
-									"type": "Switch",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"on": {
-											"value": "@toLower(last(split(item().name, '.')))\n",
-											"type": "Expression"
-										},
-										"cases": [
-											{
-												"value": "csv",
-												"activities": [
-													{
-														"name": "region1csv",
-														"type": "Copy",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "0.12:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"source": {
-																"type": "DelimitedTextSource",
-																"storeSettings": {
-																	"type": "AzureBlobFSReadSettings",
-																	"recursive": true,
-																	"enablePartitionDiscovery": false
-																},
-																"formatSettings": {
-																	"type": "DelimitedTextReadSettings"
-																}
-															},
-															"sink": {
-																"type": "DelimitedTextSink",
-																"storeSettings": {
-																	"type": "AzureBlobStorageWriteSettings"
-																},
-																"formatSettings": {
-																	"type": "DelimitedTextWriteSettings",
-																	"quoteAllText": true,
-																	"fileExtension": ".txt"
-																}
-															},
-															"enableStaging": false,
-															"translator": {
-																"type": "TabularTranslator",
-																"typeConversion": true,
-																"typeConversionSettings": {
-																	"allowDataTruncation": true,
-																	"treatBooleanAsNumber": false
-																}
-															}
-														},
-														"inputs": [
-															{
-																"referenceName": "region1csv",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														],
-														"outputs": [
-															{
-																"referenceName": "DelimitedText6",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														]
-													}
-												]
-											},
-											{
-												"value": "region2jason",
-												"activities": [
-													{
-														"name": "region2jason",
-														"type": "Copy",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "0.12:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"source": {
-																"type": "DelimitedTextSource",
-																"storeSettings": {
-																	"type": "AzureBlobFSReadSettings",
-																	"recursive": true,
-																	"enablePartitionDiscovery": false
-																},
-																"formatSettings": {
-																	"type": "DelimitedTextReadSettings"
-																}
-															},
-															"sink": {
-																"type": "DelimitedTextSink",
-																"storeSettings": {
-																	"type": "AzureBlobStorageWriteSettings"
-																},
-																"formatSettings": {
-																	"type": "DelimitedTextWriteSettings",
-																	"quoteAllText": true,
-																	"fileExtension": ".txt"
-																}
-															},
-															"enableStaging": false,
-															"translator": {
-																"type": "TabularTranslator",
-																"typeConversion": true,
-																"typeConversionSettings": {
-																	"allowDataTruncation": true,
-																	"treatBooleanAsNumber": false
-																}
-															}
-														},
-														"inputs": [
-															{
-																"referenceName": "DelimitedText7",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														],
-														"outputs": [
-															{
-																"referenceName": "DelimitedText8",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														]
-													}
-												]
-											},
-											{
-												"value": "xlsx",
-												"activities": [
-													{
-														"name": "otherregionsxlsx",
-														"type": "Copy",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "0.12:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"source": {
-																"type": "ExcelSource",
-																"storeSettings": {
-																	"type": "AzureBlobFSReadSettings",
-																	"recursive": true,
-																	"enablePartitionDiscovery": false
-																}
-															},
-															"sink": {
-																"type": "DelimitedTextSink",
-																"storeSettings": {
-																	"type": "AzureBlobStorageWriteSettings"
-																},
-																"formatSettings": {
-																	"type": "DelimitedTextWriteSettings",
-																	"quoteAllText": true,
-																	"fileExtension": ".txt"
-																}
-															},
-															"enableStaging": false,
-															"translator": {
-																"type": "TabularTranslator",
-																"typeConversion": true,
-																"typeConversionSettings": {
-																	"allowDataTruncation": true,
-																	"treatBooleanAsNumber": false
-																}
-															}
-														},
-														"inputs": [
-															{
-																"referenceName": "Excel1",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														],
-														"outputs": [
-															{
-																"referenceName": "DelimitedText9",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														]
-													}
-												]
-											}
-										]
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Folderpath": {
-						"type": "string"
-					},
-					"Filepath": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-08-05T14:35:46Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/region1csv')]"
-			]
 		}
 	]
 }
