@@ -35,6 +35,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage6'"
 		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
 		"Azureblobmetadata_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Azureblobmetadata'"
@@ -231,6 +235,9 @@
 					"AzureDataLakeStorage6_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage6_accountKey')]"
 					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
 					"Azureblobmetadata_connectionString": {
 						"value": "[parameters('Azureblobmetadata_connectionString')]"
 					},
@@ -361,15 +368,6 @@
 					},
 					"SqlServer2_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer2_properties_typeProperties_userName')]"
-					},
-					"sql_foreach_copy_onprem_properties_typeProperties_server": {
-						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_server')]"
-					},
-					"sql_foreach_copy_onprem_properties_typeProperties_database": {
-						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_database')]"
-					},
-					"sql_foreach_copy_onprem_properties_typeProperties_userName": {
-						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -390,6 +388,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"sql_foreach_copy_onprem_properties_typeProperties_server": {
+						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_server')]"
+					},
+					"sql_foreach_copy_onprem_properties_typeProperties_database": {
+						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_database')]"
+					},
+					"sql_foreach_copy_onprem_properties_typeProperties_userName": {
+						"value": "[parameters('sql_foreach_copy_onprem_properties_typeProperties_userName')]"
 					},
 					"worldbankdata_properties_typeProperties_server": {
 						"value": "[parameters('worldbankdata_properties_typeProperties_server')]"

@@ -26,6 +26,9 @@
 		"AzureDataLakeStorage6_accountKey": {
 			"value": ""
 		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
 		"Azureblobmetadata_connectionString": {
 			"value": ""
 		},
