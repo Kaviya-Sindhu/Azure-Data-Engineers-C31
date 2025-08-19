@@ -1,0 +1,12 @@
+{
+	"name": "world_bank_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "worldbankdata",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}

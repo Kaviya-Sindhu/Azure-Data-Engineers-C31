@@ -1,0 +1,88 @@
+{
+	"name": "worldbankdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "world_bank_data_2025.csv",
+				"fileSystem": "databricksinput"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "country_name",
+				"type": "String"
+			},
+			{
+				"name": "country_id",
+				"type": "String"
+			},
+			{
+				"name": "year",
+				"type": "String"
+			},
+			{
+				"name": "Inflation (CPI %)",
+				"type": "String"
+			},
+			{
+				"name": "GDP (Current USD)",
+				"type": "String"
+			},
+			{
+				"name": "GDP per Capita (Current USD)",
+				"type": "String"
+			},
+			{
+				"name": "Unemployment Rate (%)",
+				"type": "String"
+			},
+			{
+				"name": "Interest Rate (Real, %)",
+				"type": "String"
+			},
+			{
+				"name": "Inflation (GDP Deflator, %)",
+				"type": "String"
+			},
+			{
+				"name": "GDP Growth (% Annual)",
+				"type": "String"
+			},
+			{
+				"name": "Current Account Balance (% GDP)",
+				"type": "String"
+			},
+			{
+				"name": "Government Expense (% of GDP)",
+				"type": "String"
+			},
+			{
+				"name": "Government Revenue (% of GDP)",
+				"type": "String"
+			},
+			{
+				"name": "Tax Revenue (% of GDP)",
+				"type": "String"
+			},
+			{
+				"name": "Gross National Income (USD)",
+				"type": "String"
+			},
+			{
+				"name": "Public Debt (% of GDP)",
+				"type": "String"
+			}
+		]
+	}
+}
