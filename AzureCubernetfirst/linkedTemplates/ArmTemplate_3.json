@@ -1352,7 +1352,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/maneeshanaredla1@gmail.com/Untitled Notebook 2025-08-19 00:08:10",
+							"notebookPath": {
+								"value": "/Workspace/Users/maneeshanaredla1@gmail.com/Untitled Notebook 2025-08-19 00:08:10",
+								"type": "Expression"
+							},
 							"baseParameters": {
 								"input_path": {
 									"value": "abfss://databricksinput@azurecubernetfirststor.dfs.core.windows.net\n",

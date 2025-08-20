@@ -87,6 +87,10 @@
 			"type": "string",
 			"defaultValue": "https://azurecubernetfirststor.dfs.core.windows.net/"
 		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0730-151919-hl5w96e2"
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://azurekeyvau.vault.azure.net/"
@@ -276,7 +280,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/maneeshanaredla1@gmail.com/Untitled Notebook 2025-08-19 00:08:10",
+							"notebookPath": {
+								"value": "/Workspace/Users/maneeshanaredla1@gmail.com/Untitled Notebook 2025-08-19 00:08:10",
+								"type": "Expression"
+							},
 							"baseParameters": {
 								"input_path": {
 									"value": "abfss://databricksinput@azurecubernetfirststor.dfs.core.windows.net\n",
@@ -3924,11 +3931,7 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureDatabricks1_accessToken')]"
 					},
-					"newClusterNodeType": "Standard_F4",
-					"newClusterNumOfWorker": "1",
-					"newClusterVersion": "16.4.x-scala2.12",
-					"clusterOption": "Fixed",
-					"newClusterInitScripts": []
+					"existingClusterId": "[parameters('AzureDatabricks1_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []

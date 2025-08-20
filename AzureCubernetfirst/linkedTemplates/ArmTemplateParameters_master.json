@@ -65,6 +65,9 @@
 		"AzureDataLakeStorage6_properties_typeProperties_url": {
 			"value": "https://azurecubernetfirststor.dfs.core.windows.net/"
 		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "0730-151919-hl5w96e2"
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://azurekeyvau.vault.azure.net/"
 		},
