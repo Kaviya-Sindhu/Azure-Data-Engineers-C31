@@ -1,0 +1,50 @@
+{
+	"name": "DSforInputPassangerBookingsData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSforBritishAirways",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Passanger_Bookings_Data.csv",
+				"folderPath": "British-Airways-Folder",
+				"container": "britaircontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "passanger_id",
+				"type": "String"
+			},
+			{
+				"name": "booking_id",
+				"type": "String"
+			},
+			{
+				"name": "flight_number",
+				"type": "String"
+			},
+			{
+				"name": "seat_number",
+				"type": "String"
+			},
+			{
+				"name": "booking_date",
+				"type": "String"
+			},
+			{
+				"name": "price",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

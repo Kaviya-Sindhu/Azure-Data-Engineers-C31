@@ -1,0 +1,50 @@
+{
+	"name": "DSforPassengerDetails",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSforBritishAirways",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Passanger_Details.csv",
+				"folderPath": "British-Airways-Folder",
+				"container": "britaircontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "passanger_id",
+				"type": "String"
+			},
+			{
+				"name": "passanger_name",
+				"type": "String"
+			},
+			{
+				"name": "age",
+				"type": "String"
+			},
+			{
+				"name": "gender",
+				"type": "String"
+			},
+			{
+				"name": "email",
+				"type": "String"
+			},
+			{
+				"name": "phone_number",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "myADFDataFactory01",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4f5481e3-9862-4702-9f6c-25464e8ff13d",
+		"tenantId": "7d8f8991-e725-4868-966e-c8bb7f873842"
+	}
+}
